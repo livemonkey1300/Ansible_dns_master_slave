@@ -1,0 +1,52 @@
+---
+# tasks file for bind.play
+- name: install bind on a centos VM
+  yum:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages:
+    - bind
+    - bind-utils
+
+
+- name : Copy named
+  template:
+    src: named.j2
+    dest: "/etc/named.conf"
+
+- name: Create Forward Zone Directory if it does not exist
+  file:
+    path: /etc/named/zones
+    state: directory
+    mode: '0755'
+  when: inventory_hostname in groups['master']
+
+- name : Copy Forward Zone File
+  template:
+    src: FQDN.j2
+    dest: "/etc/named/zones/db.{{FQDN}}"
+  when: inventory_hostname in groups['master']
+
+- name : Copy Forward Zone File
+  template:
+    src: PTR.j2
+    dest: "/etc/named/zones/db.{{PTR}}"
+  when: inventory_hostname in groups['master']
+
+- name : Copy named.conf.local
+  template:
+    src: named.conf.local.j2
+    dest: "/etc/named/named.conf.local"
+  when: inventory_hostname in groups['master']
+
+
+- name: Start service named, if not started
+  service:
+    name: named.service
+    state: restarted
+
+- name : Copy resolv.conf
+  template:
+    src: resolv.j2
+    dest: /etc/resolv.conf

@@ -1,0 +1,9 @@
+zone "{{FQDN}}" {
+    type master;
+    file "/etc/named/zones/db.{{FQDN}}";
+};
+
+zone "{{PTR}}.in-addr.arpa" {
+    type master;
+    file "/etc/named/zones/db.{{PTR}}";
+    };

@@ -1,0 +1,20 @@
+$TTL    604800
+@       IN      SOA     ns1.{{FQDN}}. admin.{{FQDN}}. (
+                              3         ; Serial
+             604800     ; Refresh
+              86400     ; Retry
+            2419200     ; Expire
+             604800 )   ; Negative Cache TTL
+
+; name servers
+{% for host in vars['play_hosts'] %}
+    IN      NS      ns{{loop.index}}.{{FQDN}}.
+{% endfor %}
+
+; PTR records
+{% for host in vars['play_hosts'] %}
+{{ host | regex_replace( PTRORIGIN , '') }}   IN      PTR     ns{{loop.index}}.{{FQDN}}.
+{% endfor %}
+{% for host in vars['play_hosts'] %}
+{{ host | regex_replace( PTRORIGIN , '') }}   IN      PTR     host{{loop.index}}.{{FQDN}}.
+{% endfor %}

@@ -1,0 +1,4 @@
+search {{FQDN}}  # your private domain
+{% for host in vars['play_hosts'] %}
+nameserver  {{ host }}
+{% endfor %}

@@ -1,0 +1,20 @@
+$TTL	86400 ;
+$ORIGIN {{FQDN}}.
+@  1D  IN  SOA ns1.{{FQDN}}. hostmaster.{{FQDN}}. (
+			      2002022401 ; serial
+			      3H ; refresh
+			      15 ; retry
+			      1w ; expire
+			      3h ; nxdomain ttl
+			     )
+       IN  NS     ns1.{{FQDN}}. ;
+       IN  NS     ns2.{{FQDN}}. ; 
+       IN  MX  10 mail.{{FQDN}}. ;
+; server host definitions
+{% for host in vars['play_hosts'] %}
+ns{{loop.index}}      IN      A   {{ host }};
+{% endfor %}
+
+{% for host in vars['play_hosts'] %}
+host{{loop.index}}      IN      A   {{ host }};
+{% endfor %}
