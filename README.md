@@ -1,16 +1,16 @@
 # Ansible DNS Master Slave
 
 <h2>Usage:</h2>
-To use it inside a production environment
-Modify the file name host on the root of the project
+To use it inside a production environment<br> 
+Modify the file name host on the root of the project<br> 
 
-The master group , will set-up DNS server to serves as master
-The slave group , will set set-up DNS server to server as slave
+The master group , will set-up DNS server to serves as master<br> 
+The slave group , will set set-up DNS server to server as slave<br> 
 
-Inside the [all:vars]
-The FQDN variable would need to be change for the desired domain
-PTR variable would need to be change for required networks
-As well as the PTRORIGIN variable
+Inside the [all:vars]<br> 
+The FQDN variable would need to be change for the desired domain<br> 
+PTR variable would need to be change for required networks<br> 
+As well as the PTRORIGIN variable<br> 
 
 Once all the variable and ips are changed
 <code>
